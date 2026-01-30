@@ -1,8 +1,22 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Path
 
 app = FastAPI()
 
-@app.get("/")
+@app.get("/") # home page
 
-def index():
+def myprofile():
     return {"name":"Nesre"}
+
+
+friends = {
+    1:{
+        "name": "Fozi", 
+        "age": 20,
+        "Level":"BSc"
+    }
+}
+
+@app.get("/friends/{friend_id}")
+
+def get_friend(friend_id: int = Path(..., description="ID of the friend you wanna view.", gt=0)):
+    return friends[friend_id]
